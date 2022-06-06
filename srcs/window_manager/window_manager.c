@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window_manager.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llethuil <llethuil@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: agirardi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 17:33:14 by llethuil          #+#    #+#             */
-/*   Updated: 2022/05/30 17:33:18 by llethuil         ###   ########lyon.fr   */
+/*   Updated: 2022/06/06 14:36:52 by agirardi         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,12 @@ static void	get_window (t_data *data);
 
 void	window_manager(t_data *data)
 {
-	data->win.wdth = 1024;
-	data->win.hgt = 512;
+	// data->win.wdth = data->config.map_wdth * 64;
+	// if (data->win.wdth > 960)
+		data->win.wdth = 960;
+	// data->win.hgt = data->config.map_hgt * 64;
+	// if (data->win.hgt > 640)
+		data->win.hgt = 640;
 	get_window(data);
 	mlx_hook(data->win.edge, 17, 0, close_window, data);
 }

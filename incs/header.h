@@ -6,7 +6,7 @@
 /*   By: agirardi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 17:22:50 by llethuil          #+#    #+#             */
-/*   Updated: 2022/06/02 15:02:48 by agirardi         ###   ########lyon.fr   */
+/*   Updated: 2022/06/06 17:22:37 by agirardi         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,7 @@ typedef struct s_data
 	t_texture	north_texture;
 	t_texture	south_texture;
 	t_texture	west_texture;
+	t_coord		camera;
 }	t_data;
 
 #endif

@@ -63,11 +63,11 @@ static char *result[] = {
 "C c #FEFEFE",
 "Z c white",
 /* pixels */
-"dddddddddddddds999+dddddd@@@@@@@@@@@@@@@@ddddO887ddddddddddddddd",
+"dddddddddddddds999+ddddddddddddddddddddddddddO887ddddddddddddddd",
 "ddddddddddddddd999Osdddddddddddddddddddddddddo889ddddddddddddddd",
 "dddddddddddddds999Osdddddddddddddddddddddddddo889ddddddddddddddd",
 "ddddddddddddddd888Osdddddddddddddddddddddddddo889ddddddddddddddd",
-"dddddddddddddds888OsddddddCCCCCCCCCCCCCCCddddo889ddddddddddddddd",
+"dddddddddddddds888Osdddddddddddddddddddddddddo889ddddddddddddddd",
 "dddddddddddddds888Osdddddddddddddddddddddddddo889ddddddddddddddd",
 "dddddddddddddds888Osdddddddddddddddddddddddddo889ddddddddddddddd",
 "dddddddddddddds889Osdddddddddddddddddddddddddo889ddddddddddddddd",

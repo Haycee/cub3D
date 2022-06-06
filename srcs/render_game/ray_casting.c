@@ -6,7 +6,7 @@
 /*   By: agirardi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 18:23:09 by llethuil          #+#    #+#             */
-/*   Updated: 2022/06/03 14:36:21 by agirardi         ###   ########lyon.fr   */
+/*   Updated: 2022/06/06 15:06:08 by agirardi         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,13 @@ void	ray_casting(t_data *data)
 	double	angle;
 
 	i = -1;
-	while (++i < (data->config.map_wdth * 64))
+	// while (++i < (data->config.map_wdth * 64))
+	while (++i < data->win.wdth)
 	{
-		angle = data->player.dir.angle - data->player.fov / 2 + data->player.fov * i / ((double)data->config.map_wdth * 64);
+		angle = data->player.dir.angle - data->player.fov / 2 + data->player.fov * i / ((double)data->win.wdth);
 		throw_ray(data, i, angle);
 	}
-	mlx_put_image_to_window(data->win.mlx, data->win.edge, data->walls.ptr, 512, 0);
+	mlx_put_image_to_window(data->win.mlx, data->win.edge, data->walls.ptr, 0, 0);
 }
 
 void	throw_ray(t_data *data, int i, double angle)
@@ -36,7 +37,7 @@ void	throw_ray(t_data *data, int i, double angle)
 	double	step;
 
 	step = 0;
-	while(step < 520)
+	while(step < 300000)
 	{
 		ray_x = data->player.pos.x + step * cos(angle);
 		ray_y = data->player.pos.y + step * sin(angle);
@@ -45,20 +46,24 @@ void	throw_ray(t_data *data, int i, double angle)
 			render_walls(data, i, angle, step);
 			break;
 		}
-		pixel_put(&data->mini_map, ray_x, ray_y, 0xFFC0CB); // display rays on the mini_map
+		// pixel_put(&data->mini_map, ray_x, ray_y, 0xFFC0CB); // display rays on the mini_map
 		step += 0.05;
 	}
 }
 
 void	render_walls(t_data *data, int i, double angle, double step)
 {
-	float	column_hgt;
+	double	column_hgt;
+
 
 	column_hgt = (data->win.hgt / (step * cos(angle - data->player.dir.angle))) * 25;
-	render_rect(data, &data->walls, (t_rect){data->win.wdth/2+i, 0, 1, data->win.hgt/2+column_hgt/2, data->config.ceiling_hex_code}); // draw ceiling
-	// render_rect(data, &data->walls, (t_rect){data->win.wdth/2+i, data->win.hgt/2-column_hgt/2, 1, column_hgt, 0xFFFFFF}); // draw wall
-	render_rect(data, &data->walls, (t_rect){data->win.wdth/2+i, data->win.hgt/2+column_hgt/2 - 1, 1, data->win.hgt - (data->win.hgt/2+column_hgt/2), data->config.floor_hex_code}); // draw floor
+	
+	// printf("i : %d	angle : %f	step : %f column_hgt : %f	data->win.hgt : %d\n", i, angle, step, column_hgt, data->win.hgt);
+	// exit(1);
+	
+	render_rect(data, &data->walls, (t_rect){i, 0, 1, data->win.hgt/2+column_hgt/2, data->config.ceiling_hex_code}); // draw ceiling
 	draw_wall(data, i, angle, step);
+	render_rect(data, &data->walls, (t_rect){i, data->win.hgt/2+column_hgt/2 + 1, 1, data->win.hgt - (data->win.hgt/2+column_hgt/2), data->config.floor_hex_code}); // draw floor
 }
 
 static void	draw_wall(t_data *data, int i, double angle, double step)
@@ -84,7 +89,8 @@ static void	draw_wall(t_data *data, int i, double angle, double step)
 		if (texture_y < 0)
 			texture_y = 0;
 		color = get_tex_color(&data->east_texture, &(t_coord){texture_x, texture_y});
-		pixel_put(&data->walls, data->win.wdth/2+i, data->win.hgt/2+column_hgt/2 - 1 - j, color);
+		pixel_put(&data->walls, i, data->win.hgt/2+column_hgt/2 - j, color);
+		// pixel_put(&data->walls, data->win.wdth+i, data->win.hgt+column_hgt - 1 - j, color);
 	}
 }
 

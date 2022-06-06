@@ -6,7 +6,7 @@
 /*   By: agirardi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 17:32:34 by llethuil          #+#    #+#             */
-/*   Updated: 2022/06/02 19:10:58 by agirardi         ###   ########lyon.fr   */
+/*   Updated: 2022/06/06 18:02:08 by agirardi         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ static int	throw_collision_ray(t_data *data, double angle)
 		ray_y = data->player.pos.y + step * sin(angle);
 		if (data->config.map[(int)ray_y / 64][(int)ray_x / 64] == '1')
 			return (YES);
-		pixel_put(&data->mini_map, ray_x, ray_y, 0xC70039); // display rays on the mini_map
+		// pixel_put(&data->mini_map, ray_x, ray_y, 0xC70039); // display rays on the mini_map
 		step += 0.05;
 	}
 	return (NO);

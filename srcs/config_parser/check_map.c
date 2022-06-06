@@ -59,6 +59,8 @@ static int	player_init(t_config *config, t_player *player, int x, int y)
 	config->player_orientation = config->map[y][x];
 	player->pos.x = x * 64 + 27;
 	player->pos.y = y * 64 + 27;
+	printf("y : %f\n", player->pos.y);
+	printf("x : %f\n", player->pos.x);
 	return (success);
 }
 

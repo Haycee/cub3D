@@ -6,11 +6,13 @@
 /*   By: agirardi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 17:49:41 by llethuil          #+#    #+#             */
-/*   Updated: 2022/06/06 17:50:26 by agirardi         ###   ########lyon.fr   */
+/*   Updated: 2022/06/09 04:19:48 by agirardi         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
+
+int	render_wall(t_data *data, int x, int y);
 
 void	render_mini_map(t_data *data, t_config *config)
 {
@@ -18,40 +20,58 @@ void	render_mini_map(t_data *data, t_config *config)
 	int		y;
 
 	y = -1;
-	while (++y < config->map_hgt && y < 15)
+	while (++y < config->map_hgt) // Ajouter sécurité (taille max de la fenetre)
 	{
+		printf("%d : %d\n", y, (int)ft_strlen(config->map[y]));
 		x = -1;
-		while (config->map[y][++x] && x < 15)
+		while (++x < (int)ft_strlen(config->map[y]))
 		{
-			if (config->map[y][x] == '1')
-				render_rect(data, &data->mini_map, (t_rect){x * 8, y * 8, 8, 8, 0x01262E});
+			if (config->map[y][x] != '1')
+				render_rect(data, &data->walls, (t_rect){(x * 7) + 10, (y * 7) + 10, 2, 2, 0xFFFFFF});
 			else
-				render_rect(data, &data->mini_map, (t_rect){x * 8, y * 8, 8, 8, 0xFFFFFF});
+				render_wall(data, x, y);
+				// render_rect(data, &data->walls, (t_rect){(x * 7) + 10, (y * 7) + 10, 2, 2, 0x000000});
 		}
 	}
 	render_player(data);
 }
 
-void	ini_camera_pos(t_data *data)
+int	render_wall(t_data *data, int x, int y)
 {
-	int	x;
-	int	y;
+	int	check;
 
-	y = data->player.pos.y - ((data->win.hgt / 64) / 2);
-	x = data->player.pos.x - ((data->win.wdth / 64) / 2);
-	if (y < 0)
-		y = 0;
-	if (x < 0)
-		x = 0;
-	if (y + data->win.hgt / 64 > data->config.map_hgt)
-		y = data->config.map_hgt - (data->win.hgt / 64);
-	if (x + data->win.wdth / 64 > data->config.map_wdth)
-		x = data->config.map_wdth - (data->win.wdth / 64);
-	data->camera.y = y;
-	data->camera.x = x;
+	check = 0;
+	if (x > 0 && data->config.map[y][x - 1] != '1')
+		check = 1;
+	if (x < (int)ft_strlen(data->config.map[y]) && data->config.map[y][x + 1] != '1')
+		if (data->config.map[y][x + 1] != 0)
+			check = 1;
+	if (y > 0 && (int)ft_strlen(data->config.map[y - 1]) >= x)
+		if (data->config.map[y - 1][x] != '1')
+			check = 1;
+	if (y < data->config.map_hgt && ft_strlen(data->config.map[y + 1]) >= ft_strlen(data->config.map[y]))
+		if (data->config.map[y + 1][x] != '1')
+			check = 1;
+
+	if (check == 1)
+		render_rect(data, &data->walls, (t_rect){(x * 7) + 10, (y * 7) + 10, 2, 2, 0x000000});
+	return (check);
 }
 
 void	render_player(t_data *data)
 {
-	render_rect(data, &data->mini_map, (t_rect){data->player.pos.x, data->player.pos.y, 4, 4, 0xFFFF00});
+	double	x;
+	double	y;
+
+	x = ((data->player.pos.x / 64) * 7) + 8;
+	// if (x > ((data->config.map_wdth - 2) * 7) + 12)
+	// 	x = ((data->config.map_wdth - 2) * 7) + 10;
+	// if (x < 17)
+	// 	x = 19;
+	y = ((data->player.pos.y / 64) * 7) + 8;
+	// if (y > ((data->config.map_hgt - 2) * 7) + 12)
+	// 	y = ((data->config.map_hgt - 2) * 7) + 10;
+	// if (y < 17)
+	// 	y = 19;
+	render_rect(data, &data->walls, (t_rect){x, y, 2, 2, 0xFFFF00});
 }

@@ -6,7 +6,7 @@
 /*   By: agirardi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 17:49:41 by llethuil          #+#    #+#             */
-/*   Updated: 2022/06/09 04:19:48 by agirardi         ###   ########lyon.fr   */
+/*   Updated: 2022/06/10 09:49:24 by agirardi         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	render_mini_map(t_data *data, t_config *config)
 	y = -1;
 	while (++y < config->map_hgt) // Ajouter sécurité (taille max de la fenetre)
 	{
-		printf("%d : %d\n", y, (int)ft_strlen(config->map[y]));
 		x = -1;
 		while (++x < (int)ft_strlen(config->map[y]))
 		{

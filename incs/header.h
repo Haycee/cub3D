@@ -6,7 +6,7 @@
 /*   By: agirardi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 17:22:50 by llethuil          #+#    #+#             */
-/*   Updated: 2022/06/06 17:22:37 by agirardi         ###   ########lyon.fr   */
+/*   Updated: 2022/06/12 15:04:55 by agirardi         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,13 +172,23 @@ typedef struct s_player
 	double		delta_x;
 	double		delta_y;
 	double		fov;
+	char		orientation;
 }	t_player;
+
+typedef struct s_ray
+{
+	double		angle;
+	double		x;
+	double		y;
+	double		step;
+}	t_ray;
 
 typedef struct s_data
 {
 	t_config	config;
 	t_win		win;
 	t_player	player;
+	t_ray		ray;
 	t_img		mini_map;
 	t_img		walls;
 	t_texture	east_texture;

@@ -27,8 +27,8 @@
 
 /*	render_game/ray_casting.c									*/
 void	ray_casting(t_data *data);
-void	throw_ray(t_data *data, int i, double angle);
-void	render_walls(t_data *data, int i, double angle, double step);
+void	throw_ray(t_data *data, int i);
+void	render_walls(t_data *data, int i);
 
 /*	render_game/render_game.c									*/
 void	render_game(t_data *data, t_config *config, t_win *win);

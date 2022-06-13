@@ -19,7 +19,7 @@
 
 #include "main.h"
 
-void	init_player(t_player *player, char c)
+void	init_player(t_data *data, t_player *player, char c)
 {
 	if (c == 'N')
 	{
@@ -48,4 +48,5 @@ void	init_player(t_player *player, char c)
 	player->fov = M_PI / 3;
 	player->delta_x = cos(player->dir.angle) * 5;
 	player->delta_y = sin(player->dir.angle) * 5;
+	player->orientation = data->config.player_orientation;
 }

@@ -6,7 +6,7 @@
 /*   By: agirardi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 17:32:34 by llethuil          #+#    #+#             */
-/*   Updated: 2022/06/06 18:02:08 by agirardi         ###   ########lyon.fr   */
+/*   Updated: 2022/06/13 10:18:59 by agirardi         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,13 @@
 
 #include "main.h"
 
+static void	change_player_orientation(t_data *data, t_player *player);
 static int	check_collision(t_data *data, int key);
 static int	throw_collision_ray(t_data *data, double angle);
 
 int	key_press(int key, t_data *data)
 {
+	printf("pos.x = %f		pos.y = %f\n", data->player.pos.x, data->player.pos.y);
 	if (key == W)
 		move_up(data);;
 	if (key == S)
@@ -42,6 +44,7 @@ void	turn_left(t_data *data)
 	data->player.dir.angle -= M_PI / 90;
 	if (data->player.dir.angle < 0)
 		data->player.dir.angle += 2 * M_PI;
+	change_player_orientation(data, &data->player);
 	data->player.delta_x = cos(data->player.dir.angle) * 5;
 	data->player.delta_y = sin(data->player.dir.angle) * 5;
 }
@@ -51,6 +54,7 @@ void	turn_right(t_data *data)
 	data->player.dir.angle += M_PI / 90;
 	if (data->player.dir.angle > 2 * M_PI)
 		data->player.dir.angle -= 2 * M_PI;
+	change_player_orientation(data, &data->player);
 	data->player.delta_x = cos(data->player.dir.angle) * 5;
 	data->player.delta_y = sin(data->player.dir.angle) * 5;
 }
@@ -71,6 +75,25 @@ void	move_down(t_data *data)
 		data->player.pos.x -= data->player.delta_x;
 		data->player.pos.y -= data->player.delta_y;
 	}
+}
+
+
+static void	change_player_orientation(t_data *data, t_player *player)
+{
+	if ((data->player.dir.angle >= ((7 * M_PI) / 4)
+			&& data->player.dir.angle < (2 * M_PI))
+		|| (data->player.dir.angle >= 0
+			&& data->player.dir.angle < (M_PI / 4)))
+		player->orientation = 'E';
+	else if (data->player.dir.angle >= (M_PI / 4)
+		&& data->player.dir.angle < ((3 * M_PI) / 4))
+		player->orientation = 'S';
+	else if (data->player.dir.angle >= ((3 * M_PI) / 4)
+		&& data->player.dir.angle < ((5 * M_PI) / 4))
+		player->orientation = 'W';
+	else if (data->player.dir.angle >= ((5 * M_PI) / 4)
+		&& data->player.dir.angle < ((7 * M_PI) / 4))
+		player->orientation = 'N';
 }
 
 static int	check_collision(t_data *data, int key)
